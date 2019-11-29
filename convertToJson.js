@@ -2,7 +2,7 @@ const fs 			= require("fs");
 const FETCHDATA 	= require("./fetchData.js");
 const DATAACCESS    = new FETCHDATA();
 const ARCHIVER  	= require('archiver');
-
+const BEAUTIFY 		= require("json-beautify");
 
 
 
@@ -28,11 +28,6 @@ convertToJson.prototype.categorize = function(data, response) {
 			languages[obj.language] = {}
 		}
 
-		// languages[obj.language].push({
-		// 		[obj.key] : obj.translation
-		// });
-
-
 		languages[obj.language][obj.key] = obj.translation;
 	}
 
@@ -42,11 +37,11 @@ convertToJson.prototype.categorize = function(data, response) {
     });
 
     
-
+	 
     // Send the file to the page output.
     zip.pipe(response);
 	Object.keys(languages).forEach((language)=> {
-		zip.append(JSON.stringify(languages[language]), {name : language+".json"});
+		zip.append(JSON.stringify(BEAUTIFY(languages[language], null, 2, 100)), {name : language+".json"});
 	});
 
     zip.finalize();
