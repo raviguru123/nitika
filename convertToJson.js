@@ -4,6 +4,9 @@ const DATAACCESS    = new FETCHDATA();
 const ARCHIVER  	= require('archiver');
 const CONVERTTOXML  = require("./convertToXml.js");
 const CONVERTTOXMLOBJ = new CONVERTTOXML();
+const BEAUTIFY 		= require("json-beautify");
+
+
 
 function convertToJson(req, res) {
 
@@ -39,6 +42,7 @@ convertToJson.prototype.categorize = function(data, request, response) {
     });
 
 
+
 	zip.pipe(response);
 
 
@@ -47,11 +51,9 @@ convertToJson.prototype.categorize = function(data, request, response) {
     // 	var xmldata = CONVERTTOXMLOBJ.init(languages);
     // }
 
-    // Send the file to the page output.
-    
 	
 	Object.keys(languages).forEach((language)=> {
-		zip.append(JSON.stringify(languages[language]), {name : language+".json"});
+		zip.append(JSON.stringify(BEAUTIFY(languages[language], null, 2, 100)), {name : language+".json"});
 	});
 
     zip.finalize();
