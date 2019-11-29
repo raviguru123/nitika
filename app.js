@@ -13,7 +13,8 @@ const 	    compression   = require('compression');
 var jsonconvertor = new convertToJson();
 
 app.get('/getdata', (request, response) => {
-  	jsonconvertor.fetchAndFilter(response);
+
+	jsonconvertor.fetchAndFilter(request, response);
 })
 
 

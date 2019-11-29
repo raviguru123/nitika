@@ -2,21 +2,22 @@ const fs 			= require("fs");
 const FETCHDATA 	= require("./fetchData.js");
 const DATAACCESS    = new FETCHDATA();
 const ARCHIVER  	= require('archiver');
-
-
-
+const CONVERTTOXML  = require("./convertToXml.js");
+const CONVERTTOXMLOBJ = new CONVERTTOXML();
 
 function convertToJson(req, res) {
 
 }
 
-convertToJson.prototype.fetchAndFilter =  function(response) {
+
+
+convertToJson.prototype.fetchAndFilter =  function(request, response) {
 	var data = DATAACCESS.getdata()
-	this.categorize(data, response);
+	this.categorize(data, request, response);
 }
 
 
-convertToJson.prototype.categorize = function(data, response) {
+convertToJson.prototype.categorize = function(data, request, response) {
 	var languages 		= {};
 	var self 			= this;
 	var zip 			= ARCHIVER('zip');
@@ -28,23 +29,27 @@ convertToJson.prototype.categorize = function(data, response) {
 			languages[obj.language] = {}
 		}
 
-		// languages[obj.language].push({
-		// 		[obj.key] : obj.translation
-		// });
-
-
 		languages[obj.language][obj.key] = obj.translation;
 	}
 
-	 response.writeHead(200, {
+	
+	response.writeHead(200, {
         'Content-Type': 'application/zip',
         'Content-disposition': 'attachment; filename=myFile.zip'
     });
 
-    
+
+	zip.pipe(response);
+
+
+	var xmldata = CONVERTTOXMLOBJ.init(languages);
+    // if(request.data == 'xml') {
+    // 	var xmldata = CONVERTTOXMLOBJ.init(languages);
+    // }
 
     // Send the file to the page output.
-    zip.pipe(response);
+    
+	
 	Object.keys(languages).forEach((language)=> {
 		zip.append(JSON.stringify(languages[language]), {name : language+".json"});
 	});
