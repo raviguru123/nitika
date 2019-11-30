@@ -15,13 +15,16 @@ app.use(json2xls.middleware);
 
 
 
-var jsonconvertor = new convertToJson();
-var excelconvertor = new convertToExcel();
+var jsonconvertor 	= new convertToJson();
+var excelconvertor 	= new convertToExcel();
+var xmlconvertor 	= new convertToXml();
 
 
 app.get('/getdata', (request, response) => {
 
+	//jsonconvertor.fetchAndFilter(request, response);
 	excelconvertor.fetchAndFilter(response);
+	//xmlconvertor.fetchAndFilter(response);
 })
 
 

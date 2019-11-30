@@ -2,10 +2,9 @@ const fs 			= require("fs");
 const FETCHDATA 	= require("./fetchData.js");
 const DATAACCESS    = new FETCHDATA();
 const ARCHIVER  	= require('archiver');
-const CONVERTTOXML  = require("./convertToXml.js");
-const CONVERTTOXMLOBJ = new CONVERTTOXML();
 
-function convertToJson(req, res) {
+
+function convertToJson() {
 
 }
 
@@ -38,18 +37,7 @@ convertToJson.prototype.categorize = function(data, request, response) {
         'Content-disposition': 'attachment; filename=myFile.zip'
     });
 
-
 	zip.pipe(response);
-
-
-	var xmldata = CONVERTTOXMLOBJ.init(languages);
-    // if(request.data == 'xml') {
-    // 	var xmldata = CONVERTTOXMLOBJ.init(languages);
-    // }
-
-    // Send the file to the page output.
-    
-	
 	Object.keys(languages).forEach((language)=> {
 		zip.append(JSON.stringify(languages[language]), {name : language+".json"});
 	});
