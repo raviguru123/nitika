@@ -8,8 +8,6 @@ function convertToJson() {
 
 }
 
-
-
 convertToJson.prototype.fetchAndFilter =  function(request, response) {
 	var data = DATAACCESS.getdata()
 	this.categorize(data, request, response);

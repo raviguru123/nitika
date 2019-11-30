@@ -23,8 +23,8 @@ var xmlconvertor 	= new convertToXml();
 app.get('/getdata', (request, response) => {
 
 	//jsonconvertor.fetchAndFilter(request, response);
-	excelconvertor.fetchAndFilter(response);
-	//xmlconvertor.fetchAndFilter(response);
+	//excelconvertor.fetchAndFilter(response);
+	xmlconvertor.fetchAndFilter(response);
 })
 
 
