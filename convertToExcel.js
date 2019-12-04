@@ -29,15 +29,9 @@ convertToExcel.prototype.random_strings = function(length_of_string)
 		    }
 		    return shuffledWord;
 	}
-    // String of all alphanumeric character 
     str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
-  
-    // Shufle the $str_result and returns substring 
-    // of specified length 
     return shuffelWord(str_result).substring(0, length_of_string); 
 } 
-
-
 
 convertToExcel.prototype.deleteFolderRecursive = function(path) {
 	if( fs.existsSync(path) ) {
@@ -52,7 +46,6 @@ convertToExcel.prototype.deleteFolderRecursive = function(path) {
 	    fs.rmdirSync(path);
 	  }
 };
-
 
 convertToExcel.prototype.categorize = function(data, response) {
 	var languages 		= {};
